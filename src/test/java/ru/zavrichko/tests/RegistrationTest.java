@@ -53,10 +53,7 @@ public class RegistrationTest extends TestBase {
             $x("//label[contains(text(),'Music')]").click();
         });
 
-        step("Загружаем файл", () -> {
-            File file = new File("src/test/resources/photo.jpg");
-            Selenide.$(byId("uploadPicture")).uploadFile(file);
-        });
+
 
         step("Заполняем адрес", () -> {
             $("#currentAddress").setValue("Moscow, Manoilov Street, 64");
@@ -89,7 +86,6 @@ public class RegistrationTest extends TestBase {
             $(".table-responsive").shouldHave(text("15 May,2014"));
             $(".table-responsive").shouldHave(text("English"));
             $(".table-responsive").shouldHave(text("Sports, Reading, Music"));
-            $(".table-responsive").shouldHave(text("photo.jpg"));
             $(".table-responsive").shouldHave(text("NCR Gurgaon"));
         });
 
