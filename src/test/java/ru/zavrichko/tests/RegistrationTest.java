@@ -1,18 +1,21 @@
 package ru.zavrichko.tests;
 
-import com.codeborne.selenide.Selenide;
+import io.qameta.allure.*;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selectors.byId;
 import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 
 public class RegistrationTest extends TestBase {
 
+    @Owner("azavrichko")
+    @Feature("Registration")
+    @Story("Регистрация")
+    @DisplayName("Регистрация")
+    @Severity(SeverityLevel.BLOCKER)
     @Test
     void RegistrationTest() {
         // Open website
@@ -53,8 +56,6 @@ public class RegistrationTest extends TestBase {
             $x("//label[contains(text(),'Music')]").click();
         });
 
-
-
         step("Заполняем адрес", () -> {
             $("#currentAddress").setValue("Moscow, Manoilov Street, 64");
         });
@@ -88,11 +89,5 @@ public class RegistrationTest extends TestBase {
             $(".table-responsive").shouldHave(text("Sports, Reading, Music"));
             $(".table-responsive").shouldHave(text("NCR Gurgaon"));
         });
-
-
-
-
-
-
     }
 }
