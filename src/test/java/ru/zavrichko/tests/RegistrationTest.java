@@ -9,48 +9,94 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byId;
 import static com.codeborne.selenide.Selenide.*;
+import static io.qameta.allure.Allure.step;
 
 public class RegistrationTest extends TestBase {
 
     @Test
     void RegistrationTest() {
         // Open website
-        open("/automation-practice-form");
 
-        // Find Element and Set value
-        $("#firstName").setValue("Alex");
-        $("#lastName").setValue("Smirnov");
-        $("#userEmail").setValue("alex.smirnov@gmail.com");
-        $(".custom-control-label").click();
-        $("#userNumber").setValue("5648798798");
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__month-select").click();
-        $(".react-datepicker__month-select").selectOption("May");
-        $(".react-datepicker__year-select").selectOption("2014");
-        $x("//div[contains(text(),'15')]").click();
-        $("#subjectsInput").setValue("Eng").pressEnter();
-        $x("//label[contains(text(),'Sports')]").click();
-        $x("//label[contains(text(),'Reading')]").click();
-        $x("//label[contains(text(),'Music')]").click();
-        File file = new File("src/test/resources/photo.jpg");
-        Selenide.$(byId("uploadPicture")).uploadFile(file);
-        $("#currentAddress").setValue("Moscow, Manoilov Street, 64");
-        $("#react-select-3-input").setValue("NCR").pressEnter();
-        $("#react-select-4-input").setValue("Gurgaon").pressEnter();
-        $("#submit").click();
+        step("Открываем страницу", () -> {
+            open("/automation-practice-form");
+        });
+
+        step("Заполняем имя", () -> {
+            $("#firstName").setValue("Alex");
+        });
+
+        step("Заполняем фамилию", () -> {
+            $("#lastName").setValue("Smirnov");
+        });
+
+        step("Заполняем email", () -> {
+            $("#userEmail").setValue("alex.smirnov@gmail.com");
+        });
+
+        step("Заполняем номер телефона", () -> {
+            $(".custom-control-label").click();
+            $("#userNumber").setValue("5648798798");
+        });
+
+        step("Заполняем дату", () -> {
+            $("#dateOfBirthInput").click();
+            $(".react-datepicker__month-select").click();
+            $(".react-datepicker__month-select").selectOption("May");
+            $(".react-datepicker__year-select").selectOption("2014");
+            $x("//div[contains(text(),'15')]").click();
+        });
+
+        step("Заполняем хобби", () -> {
+            $("#subjectsInput").setValue("Eng").pressEnter();
+            $x("//label[contains(text(),'Sports')]").click();
+            $x("//label[contains(text(),'Reading')]").click();
+            $x("//label[contains(text(),'Music')]").click();
+        });
+
+        step("Загружаем файл", () -> {
+            File file = new File("src/test/resources/photo.jpg");
+            Selenide.$(byId("uploadPicture")).uploadFile(file);
+        });
+
+        step("Заполняем адрес", () -> {
+            $("#currentAddress").setValue("Moscow, Manoilov Street, 64");
+        });
+
+        step("Заполняем штат", () -> {
+            $("#react-select-3-input").setValue("NCR").pressEnter();
+        });
+
+        step("Заполняем город", () -> {
+            $("#react-select-4-input").setValue("Gurgaon").pressEnter();
+        });
+
+        step("Отправляем форму", () -> {
+            $("#submit").click();
+        });
 
         // Assertion
-        $("#example-modal-sizes-title-lg").shouldBe(visible);
-        $(".table-responsive").shouldHave(text("Alex"));
-        $(".table-responsive").shouldHave(text("Smirnov"));
-        $(".table-responsive").shouldHave(text("alex.smirnov@gmail.com"));
-        $(".table-responsive").shouldHave(text("Male"));
-        $(".table-responsive").shouldHave(text("5648798798"));
-        $(".table-responsive").shouldHave(text("15 May,2014"));
-        $(".table-responsive").shouldHave(text("English"));
-        $(".table-responsive").shouldHave(text("Sports, Reading, Music"));
-        $(".table-responsive").shouldHave(text("photo.jpg"));
-        $(".table-responsive").shouldHave(text("NCR Gurgaon"));
+
+        step("Проверяем отображения модальной формы", () -> {
+            $("#example-modal-sizes-title-lg").shouldBe(visible);
+        });
+
+        step("Проверяем правильность заполнения формы", () -> {
+            $(".table-responsive").shouldHave(text("Alex"));
+            $(".table-responsive").shouldHave(text("Smirnov"));
+            $(".table-responsive").shouldHave(text("alex.smirnov@gmail.com"));
+            $(".table-responsive").shouldHave(text("Male"));
+            $(".table-responsive").shouldHave(text("5648798798"));
+            $(".table-responsive").shouldHave(text("15 May,2014"));
+            $(".table-responsive").shouldHave(text("English"));
+            $(".table-responsive").shouldHave(text("Sports, Reading, Music"));
+            $(".table-responsive").shouldHave(text("photo.jpg"));
+            $(".table-responsive").shouldHave(text("NCR Gurgaon"));
+        });
+
+
+
+
+
 
     }
 }
